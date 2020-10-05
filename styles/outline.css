@@ -1,0 +1,168 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    text-rendering: optimizeLegibility;
+}
+
+.header {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    border-bottom: 1px solid rgb(203, 203, 203);
+    box-shadow: 0 2px 3px 0 rgb(203, 203, 203);
+}
+
+.logo {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    margin: 10px;
+}
+
+.logo > img {
+    max-height: 65px;
+    height: 65px;
+}
+
+.title {
+    color: #fcba03;
+    font-size: 32px;
+    font-weight: 200;
+    padding: 0 10px 0 5px;
+    border-right: 1px solid rgb(203, 203, 203);
+}
+
+.menu {
+    position: relative;
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    top: 1px;
+}
+
+_::-webkit-full-page-media, _:future, :root .safari_only, .menu {
+}
+
+.menu > a {
+    text-decoration: none;
+    font-size: 18px;
+    color: rgb(128, 128, 128);
+    margin: 0 0 0 15px;
+    border-bottom: 1px solid white;
+}
+
+.profile-button {
+    border: none;
+    background: white;
+    font-size: 18px;
+    color: rgb(128, 128, 128);
+    margin: 0 0 0 15px;
+    border-bottom: 1px solid white;
+}
+
+.menu > a:hover {
+    animation: 1s menuin forwards;
+}
+
+.profile-button:hover {
+    cursor: pointer;
+    animation: 1s menuin forwards;
+}
+
+@keyframes menuin {
+    0% {
+        border-bottom: 1px solid white;
+    }
+    100% {
+        border-bottom: 1px solid #fcba03;
+    }
+}
+
+.search-form {
+    position: relative;
+    top: -1.5px;
+    display: flex;
+    flex-flow: row;
+    height: 100%;
+    margin: 0 0 0 15px;
+    border: 1px solid rgb(203, 203, 203);
+    border-radius: 25px;
+}
+
+.search-form > button {
+    height: 30px;
+    width: 30px;
+    border: none;
+    background: transparent;
+    margin: 0 5px 0 0px;
+}
+
+.search-bar {
+    border: none;
+    background: transparent;
+    font-size: 14px;
+    color: rgb(128, 128, 128);
+    margin: 0 0 0 5px;
+}
+
+_::-webkit-full-page-media, _:future, :root .safari_only, .search-bar {
+    margin: 0;
+}
+
+.attributes {
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-end;
+    align-items: baseline;
+    font-size: 8px;
+    border-top: 1px solid rgb(203, 203, 203);
+}
+
+.attributes > p {
+    color: rgb(203, 203, 203);
+}
+
+.attributes > p > a {
+    text-decoration: none;
+    color: rgb(203, 203, 203);
+}
+
+@media screen and (max-width: 888px) {
+    .header {
+        flex-flow: column;
+        width: 100%;
+    }
+
+    .logo {
+        width: 100%;
+        position: relative;
+        align-items: center;
+        justify-content: center;
+        border-bottom: 1px solid rgb(203, 203, 203);
+        padding-bottom: 5px;
+    }
+
+    .title {
+        border: none;
+        position: relative;
+    }
+
+    .menu {
+        width: 100%;
+        flex-wrap: wrap;
+        left: 0;
+        justify-content: space-evenly;
+    }
+
+    .search-form {
+        width: 100%;
+        flex-grow: 1;
+        margin: 10px 0 0 0;
+        border-radius: 0;
+    }
+
+    .search-bar {
+        width: 100%;
+    }
+}
