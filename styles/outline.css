@@ -97,7 +97,6 @@ _::-webkit-full-page-media, _:future, :root .safari_only, .menu {
     background: transparent;
     margin: 0 5px 0 0px;
 }
-
 .search-bar {
     border: none;
     background: transparent;
@@ -118,11 +117,9 @@ _::-webkit-full-page-media, _:future, :root .safari_only, .search-bar {
     font-size: 8px;
     border-top: 1px solid rgb(203, 203, 203);
 }
-
 .attributes > p {
     color: rgb(203, 203, 203);
 }
-
 .attributes > p > a {
     text-decoration: none;
     color: rgb(203, 203, 203);
@@ -133,7 +130,6 @@ _::-webkit-full-page-media, _:future, :root .safari_only, .search-bar {
         flex-flow: column;
         width: 100%;
     }
-
     .logo {
         width: 100%;
         position: relative;
@@ -142,12 +138,10 @@ _::-webkit-full-page-media, _:future, :root .safari_only, .search-bar {
         border-bottom: 1px solid rgb(203, 203, 203);
         padding-bottom: 5px;
     }
-
     .title {
         border: none;
         position: relative;
     }
-
     .menu {
         width: 100%;
         flex-wrap: wrap;
@@ -161,7 +155,6 @@ _::-webkit-full-page-media, _:future, :root .safari_only, .search-bar {
         margin: 10px 0 0 0;
         border-radius: 0;
     }
-
     .search-bar {
         width: 100%;
     }
