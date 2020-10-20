@@ -1,0 +1,48 @@
+/*
+manage
+*/
+.options {
+    display: flex;
+    flex-flow: row;
+    background: white;
+    margin: 10px;
+}
+
+.options > h3 {
+    font-size: 18px;
+    font-weight: 400;
+    color: rgb(128, 128, 128);
+}
+
+.profile-button-2 {
+    border: none;
+    background: white;
+    font-size: 18px;
+    color: rgb(128, 128, 128);
+    margin: 0 0 0 15px;
+    border-bottom: 1px solid white;
+}
+
+.menu > a:hover {
+    animation: 1s menuin forwards;
+}
+
+.profile-button-2:hover {
+    cursor: pointer;
+    animation: 1s menuin forwards;
+}
+
+@keyframes menuin {
+    0% {
+        border-bottom: 1px solid white;
+    }
+    100% {
+        border-bottom: 1px solid #fcba03;
+    }
+}
+
+@media screen and (max-width: 888px) {
+    .options {
+        justify-content: space-evenly;
+    }
+}
