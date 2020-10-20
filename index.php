@@ -29,7 +29,7 @@ print topControls($active, $isAdmin);
 if ($forwardControl === null || $forwardControl === "home") {
     print home();
 } elseif ($forwardControl === "explore") {
-    print explore();
+    print explore($active);
 } elseif ($forwardControl === "manage" && $active) {
     print manage();
 } elseif ($forwardControl === "webad" && $active && $isAdmin) {
