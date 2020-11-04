@@ -9,52 +9,57 @@ function webAdmin()
         <button class="profile-button-2" onclick="accessForm(\'users\')">USERS</button>
     </section>
     <section class="information" style="display: block">
-            <form class="user-form" id="server" action="index.php?destination=changepassword" method="post">
-                <img class="user-icon" src="./content/user.svg" alt="user icon">
-                <div class="user-text">CHANGE PASSWORD</div>
-                <input class="text-input" type="password" name="currentPassword" placeholder="current password.." required>
-                <input class="text-input" type="password" name="newPassword" placeholder="new password.." required>
+            <form class="user-form" id="server" action="index.php?destination=server" method="post">
+                <img class="user-icon" src="./content/server.svg" alt="user icon">
+                <div class="user-text">MANAGE SERVER</div>
                 <div class="button-container">
-                    <button class="generic-button" type="reset" onclick="hideForm()" title="cancel password change">
-                        <img src="./content/error.svg" alt="cancel password change">
+                    <button class="generic-button" type="reset" onclick="hideForm()" title="exit">
+                        <img src="./content/error.svg" alt="exit">CANCEL
                     </button>
-                    <button class="generic-button" type="submit" title="change your password">
-                        <img src="./content/success.svg"alt="submit login">
+                    <button class="generic-button" id="button" type="submit" name="status-server" title="status server">
+                        <img src="./content/server-status.svg"alt="status server">STATUS
+                    </button>
+                    <button class="generic-button" id="button" type="submit" name="restart-server" title="restart server">
+                        <img src="./content/server-reset.svg"alt="restart server">RESTART
                     </button>
                 </div>
             </form>
             
-            <form class="user-form" id="data" action="index.php?destination=changeemail" method="post">
-                <img class="user-icon" src="./content/user.svg" alt="user icon">
-                <div class="user-text">CHANGE EMAIL</div>
-                <input class="text-input" type="email" name="currentEmail" placeholder="current email.." required>
-                <input class="text-input" type="email" name="newEmail" placeholder="new email.." required>
+            <form class="user-form" id="data" action="index.php?destination=data" method="post">
+                <img class="user-icon" src="./content/database.svg" alt="user icon">
+                <div class="user-text">MANAGE DATA</div>
                 <div class="button-container">
-                    <button class="generic-button" type="reset" onclick="hideForm()" title="cancel email change">
-                        <img src="./content/error.svg" alt="cancel email">
+                    <button class="generic-button" type="reset" onclick="hideForm()" title="exit">
+                        <img src="./content/error.svg" alt="exit">CANCEL
                     </button>
-                    <button class="generic-button" type="submit" title="cancel your email change">
-                        <img src="./content/success.svg" alt="submit email change">
+                    <button class="generic-button" type="submit" name="check-time" title="last time updated">
+                        <img src="./content/time.svg"alt="last time updated">C.TIME
+                    </button>                    
+                    <button class="generic-button" type="submit" name="refresh-data" title="refresh data">
+                        <img src="./content/reload.svg"alt="refresh data">UPDATE
                     </button>
                 </div>
             </form>
             
-            <form class="user-form" id="users" action="index.php?destination=deleteaccount" method="post">
-                <img class="user-icon" src="./content/user.svg" alt="user icon">
-                <div class="user-text">DELETE ACCOUNT</div>
+            <form class="user-form" id="users" action="index.php?destination=manageusers" method="post">
+                <img class="user-icon" src="./content/users.svg" alt="user icon">
+                <div class="user-text">MANAGE USERS</div>
                 <div class="button-container">
-                    <button class="generic-button" type="reset" onclick="hideForm()" title="delete account">
-                        <img src="./content/error.svg" alt="cancel delete">
+                    <button class="generic-button" type="reset" onclick="hideForm()" title="exit">
+                        <img src="./content/error.svg" alt="exit">CANCEL
                     </button>
-                    <button class="generic-button" type="submit" title="delete account">
-                        <img src="./content/success.svg" alt="submit account deletion">
+                    <button class="generic-button" type="submit" name="admin-list" title="manage admins">
+                        <img src="./content/users-admin.svg" alt="manage admins">ADMINS
+                    </button>
+                    <button class="generic-button" type="submit" name="users-list" title="manage admins">
+                        <img src="./content/users-list.svg" alt="manage users">USERS
                     </button>
                 </div>
             </form>
             
     </section>
-    <section class="attributes">
-        <p>Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a
-                href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a></p>
-    </section>';
+    <section class="content-webadmin">
+
+    </section>
+    ';
 }

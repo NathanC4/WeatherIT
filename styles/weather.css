@@ -1,0 +1,19 @@
+/*Weather Icons*/
+
+.element {
+    height: 50px;
+    width: 50px;
+    margin: 4px;
+}
+
+.white {
+    fill: #FFFFFF
+}
+
+.gray {
+    fill: #E0E0E0
+}
+
+.yellow {
+    fill: #FFEB3B
+}

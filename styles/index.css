@@ -3,7 +3,6 @@
 .information {
     display: flex;
     flex-flow: column;
-    border: 1px solid #fcba03;
 }
 
 .user-form {
@@ -40,10 +39,23 @@ _::-webkit-full-page-media, _:future, :root .text-input {
     margin: 10px 0 0 0;
 }
 
+.button-container {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
 .generic-button {
+    font-size: 14px;
+    color: rgb(128, 128, 128);
+    display: flex;
+    flex-flow: column;
+    align-items: center;
     border: none;
     background: transparent;
     cursor: pointer;
+    padding: 10px;
 }
 
 .generic-button > img {
@@ -55,7 +67,50 @@ _::-webkit-full-page-media, _:future, :root .text-input {
 }
 
 .content-a {
+    display: flex;
+    flex-flow: row;
+    background: rgb(203, 203, 203);
+}
 
+.location {
+    width: 275px;
+    min-height: 50px;
+    padding: 10px;
+    margin: 2px;
+    margin-left: 3px;
+    margin-right: 0;
+    background: linear-gradient(to right, #246fa8 0%, #246fa8 100%);
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    border-radius: 20px 0 0 20px;
+}
+
+.location-details {
+    font-size: 15px;
+    font-weight: 400;
+    color: #FFFFFF;
+}
+
+.weather {
+    width: 100%;
+    min-height: 50px;
+    padding: 10px;
+    margin: 2px;
+    margin-left: 0;
+    display: flex;
+    flex-flow: row;
+    background: linear-gradient(to left, #57c1eb 0%, #246fa8 100%);
+}
+
+.location-weather {
+    font-size: 15px;
+    color: white;
+    padding: 0 15px 0 15px;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .content-b {

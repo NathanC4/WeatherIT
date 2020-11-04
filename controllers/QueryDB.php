@@ -1,41 +1,71 @@
 <?php
 
-
 class QueryDB
 {
     //handles all query operations
     /**
      * @var mysqli
      */
-    private $msqli;
+    private mysqli $msqli;
+    private $apiKey = "649dc78ddc1f1fd88560838daa3e5f04";
 
     function __construct()
     {
-        //$this->msqli = new mysqli('localhost', 'ics325su2028', '7223', 'ics325su2028');
-        $this->msqli = new mysqli('localhost', 'verifyaccess', '33GUk2R3cfvaXaly', "user_info");
+        $this->msqli = new mysqli('localhost', 'root', '', 'weather_it');
+        $this->apiKey;
     }
 
-    function insert($query)
+    public function getApiKey(): string
+    {
+        return $this->apiKey;
+    }
+
+    /**
+     * @param $query
+     * @return mysqli_result|bool
+     * Executes an update to the database and returns a bool value based on success or failure
+     * Only for insert, update, or delete statements
+     */
+    function executeSQL($query)
     {
         return $this->msqli->query($query);
     }
 
-    function fetch($query)
+    /**
+     * @param $query
+     * @return array
+     * Returns a single row of data from SQL statement
+     * SQL should use WHERE clause for specific row
+     */
+    function fetchRow($query): array
     {
         return $this->msqli->query($query)->fetch_array();
     }
 
-    function fetchLimited($query)
+    /**
+     * @param $query
+     * @return array
+     * Returns a larger array of values based on what is in the table
+     */
+    function fetchRows($query): array
     {
         return $this->msqli->query($query)->fetch_all();
     }
 
-    function fetchDefinitions($query)
+    /**
+     * @param $query
+     * @return array
+     * Returns a list of the table column names from the database based on the query
+     */
+    function fetchColumnNames($query): array
     {
         return $this->msqli->query($query)->fetch_fields();
     }
 
-    function close()
+    /**
+     *Closes the connection to the DB
+     */
+    function closeConnection()
     {
         $this->msqli->close();
     }
