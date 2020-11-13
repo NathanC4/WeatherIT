@@ -13,6 +13,8 @@ class Location
     private string $cityName;
     private string $countryName;
     private string $stateName;
+    private float $uid;
+    private float $favoriteUID;
 
     private Weather $weatherHTML;
     private QueryDB $db;
@@ -32,7 +34,9 @@ class Location
         $htmlStart = '<section class="content-a">';
 
         if ($content === null) {
-            $innerHTML = '<div class="location">';
+            $innerHTML = '<div class="location" id="' . $this->getUid() . '">';
+            $innerHTML .= '<input class="favorite" type="checkbox" name="favorite" id="favorite">';
+            $innerHTML .= '<label class="favorite-label" for="favorite"><img src="./content/like.png" /></label>';
             $innerHTML .= '<p class="location-details">Region: ' . $this->getCityName() .
                 ($this->getStateName() === null || $this->getStateName() === "" ? null : ', ' . $this->getStateName()) . '</p>';
             $innerHTML .= '<p class="location-details">Country: ' . $this->getCountryName() . '</p>';
@@ -48,6 +52,7 @@ class Location
         $weather .= '<div class="location-weather"><h3>Tomorrow</h3>';
         $weather .= $this->weatherHTML->snow() . '<p class="location-temp">34°F</p></div>';
         $weather .= '</div>';
+
         $htmlEnd = '</section>';
 
         return $htmlStart . $innerHTML . $weather . $htmlEnd;
@@ -55,21 +60,28 @@ class Location
 
     function getLocationDetails($activeUser): bool
     {
-        $SQLa = "SELECT * FROM weather_it.USERS_FAVORITES WHERE username='$activeUser'";
-        $query = $this->db->fetchRow($SQLa);
-        $locationID = $query["location_id"];
-        $SQLb = "SELECT * FROM weather_it.LOCATIONS_DATA WHERE location_id='$locationID'";
-        $queryResults = $this->db->fetchRow($SQLb);
+        try {
+            $SQLa = "SELECT * FROM USERS_FAVORITES WHERE username='$activeUser'";
+            $query = $this->db->fetchRow($SQLa);
+            if (count($query) > 0) {
+                $locationID = $query["location_id"];
+                $SQLb = "SELECT * FROM LOCATIONS_DATA WHERE location_id='$locationID'";
+                $queryResults = $this->db->fetchRow($SQLb);
 
-        if (count($queryResults) > 0) {
+                if (count($queryResults) > 0) {
 
-            $this->setLatitude($queryResults["coord_lat"]);
-            $this->setLongitude($queryResults["coord_lon"]);
-            $this->setZoom(6);
-            $this->setCityName($queryResults["city"]);
-            $this->setStateName($queryResults["state"]);
-            $this->setCountryName($queryResults["country"]);
-            return true;
+                    $this->setLatitude($queryResults["coord_lat"]);
+                    $this->setLongitude($queryResults["coord_lon"]);
+                    $this->setZoom(6);
+                    $this->setCityName($queryResults["city"]);
+                    $this->setStateName($queryResults["state"]);
+                    $this->setCountryName($queryResults["country"]);
+                    $this->setUid($queryResults["location_id"]);
+                    return true;
+                }
+            }
+        } catch (Exception $exception) {
+            return false;
         }
         return false;
     }
@@ -80,13 +92,14 @@ class Location
         $random = $this->db->fetchRow($SQL);
 
         if (count($random) > 0) {
-
             $this->setLatitude($random["coord_lat"]);
             $this->setLongitude($random["coord_lon"]);
             $this->setZoom(6);
             $this->setCityName($random["city"]);
             $this->setStateName($random["state"]);
             $this->setCountryName($random["country"]);
+            $this->setUid($random["location_id"]);
+
             return true;
         }
         $this->db->closeConnection();
@@ -142,6 +155,14 @@ class Location
     }
 
     /**
+     * @param float $uid
+     */
+    public function setUid(float $uid): void
+    {
+        $this->uid = $uid;
+    }
+
+    /**
      * @return string
      */
     public function getCityName(): string
@@ -187,6 +208,14 @@ class Location
     public function getZoom(): int
     {
         return $this->zoom;
+    }
+
+    /**
+     * @return float
+     */
+    public function getUid(): float
+    {
+        return $this->uid;
     }
 
 }

@@ -1,0 +1,21 @@
+Features Needed:
+    Locations:
+        Favorite:
+            Add
+            Remove
+            Change Visual
+            Show current favorites in explore
+        Error Handling:
+            Clean up DB Code
+    Profile
+        Change Password
+        Change Email
+        Delete Account
+    WebAdmin
+        Admin functions
+    Search
+        Live Search
+        Create trimmed view
+    Weather
+        Get Weather Information
+        Display Weather Information

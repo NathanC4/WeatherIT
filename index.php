@@ -56,7 +56,9 @@ if ($forwardControl === null || $forwardControl === "home") {
         if ($launch->getLocationDetails($_SESSION["username"])) {
             print $launch->locationText(null);
             print map($launch->getLatitude(), $launch->getLongitude(), $launch->getZoom());
-
+        } else {
+            $launch->explore();
+            print map($launch->getLatitude(), $launch->getLongitude(), $launch->getZoom());
         }
     }
     print attributes();

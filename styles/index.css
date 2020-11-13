@@ -124,6 +124,23 @@ _::-webkit-full-page-media, _:future, :root .text-input {
     height: 500px;
 }
 
+.favorite {
+    display: none;
+}
+
+.favorite-label {
+    display: flex;
+    position: relative;
+    top: -10px;
+    justify-content: left;
+    align-items: left;
+}
+
+.favorite-label > img {
+    height: 25px;
+    margin: 3px;
+}
+
 @media screen and (max-width: 888px) {
 
 }

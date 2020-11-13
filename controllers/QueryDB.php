@@ -39,7 +39,16 @@ class QueryDB
      */
     function fetchRow($query): array
     {
-        return $this->msqli->query($query)->fetch_array();
+        try {
+            $results = $this->msqli->query($query)->fetch_array();
+            if ($results === null) {
+                return [];
+            } else {
+                return $results;
+            }
+        } catch (Exception $exception) {
+            return [];
+        }
     }
 
     /**
@@ -49,7 +58,20 @@ class QueryDB
      */
     function fetchRows($query): array
     {
-        return $this->msqli->query($query)->fetch_all();
+        try {
+            $results = $this->msqli->query($query)->fetch_all();
+            if ($results === null) {
+                return [];
+            } else {
+                return $results;
+            }
+        } catch (Exception $exception) {
+            return [];
+        }
+    }
+
+    public function viewRegisteredUsers()
+    { // < -- table and view -->
     }
 
     /**
