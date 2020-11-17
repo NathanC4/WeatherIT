@@ -1,15 +1,5 @@
 <?php
-include 'controllers/User.php';
-include 'controllers/Location.php';
-include 'web/header.php';
-include 'web/home.php';
-include 'web/explore.php';
-include 'web/manage.php';
-include 'web/webadmin.php';
-include 'web/logout.php';
-include 'web/attributes.php';
-include 'web/map.php';
-
+include_once 'PageController.php';
 
 if (session_id() == '') {
     session_start();
@@ -25,11 +15,13 @@ $active = $_SESSION["logged"];
 $isAdmin = $_SESSION["admin"];
 $forwardControl = isset($_GET['destination']) ? $_GET['destination'] : "home";
 $httpHeader = array();
+$requestedPage = new PageController($active, $isAdmin);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="ISO-8859-1">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;400;500;600&display=swap"
           rel="stylesheet">
     <link href="styles/outline.css" rel="stylesheet" type="text/css">
@@ -42,113 +34,69 @@ $httpHeader = array();
 </head>
 <body>
 <?php
+array_push($httpHeader, $httpHeader['destination'] = 'home');
 print topControls($active, $isAdmin);
 if ($forwardControl === null || $forwardControl === "home") {
-    print home();
-    $launch = new Location();
-    if (!$active) {
-        if ($launch->explore()) {
-            print map($launch->getLatitude(), $launch->getLongitude(), $launch->getZoom());
-        } else {
-            print map(30.267151, -97.743057, 7);
-        }
-    } else {
-        if ($launch->getLocationDetails($_SESSION["username"])) {
-            print $launch->locationText(null);
-            print map($launch->getLatitude(), $launch->getLongitude(), $launch->getZoom());
-        } else {
-            $launch->explore();
-            print map($launch->getLatitude(), $launch->getLongitude(), $launch->getZoom());
-        }
-    }
-    print attributes();
+    $requestedPage->goHome();
+
 } elseif ($forwardControl === "explore") {
-    print explore($active);
-    $rand = new Location();
-    $rand->explore() ? print $rand->locationText(null) : null;
-    $rand->explore() ? print $rand->locationText(null) : null;
-    $rand->explore() ? print $rand->locationText(null) : null;
-    if ($rand->explore()) {
-        print $rand->locationText(null);
-        print map($rand->getLatitude(), $rand->getLongitude(), $rand->getZoom());
-    } else {
-        print map(30.267151, -97.743057, 7);
-    }
-    print attributes();
-} elseif ($forwardControl === "manage" && $active) {
-    print manage();
-    print attributes();
+    $requestedPage->goExplore();
+
+} elseif ($forwardControl === "manage") {
+    $requestedPage->goManage();
+
 } elseif ($forwardControl === "webad" && $active && $isAdmin) {
-    print webAdmin();
-    print attributes();
+    $requestedPage->goWebAd();
+
 } elseif ($forwardControl === "login") {
     if (isset($_POST["username"]) && isset($_POST["password"])) {
-        $user = new User();
-        $user->setUsername($_POST["username"]);
-        $user->setPassword($_POST["password"]);
-        $verified = $user->verifyAccess();
-
-        if ($verified) {
-            array_push($httpHeader, $httpHeader['destination'] = 'home' . $httpHeader['success'] = 'true');
-            header('Location: ./index.php?', http_build_query($httpHeader));
-            print home();
-            print map(30.267151, -97.743057, 7);
-            print attributes();
-        } else {
-            array_push($httpHeader, $httpHeader['destination'] = 'home' . $httpHeader['failedlogin'] = 'true');
-            header('Location: ./index.php?', http_build_query($httpHeader));
-            print home();
-            print attributes();
-        }
+        $requestedPage->goLogin($_POST["username"], $_POST["password"]);
     } else {
-        array_push($httpHeader, $httpHeader['destination'] = 'home' . $httpHeader['failedlogin'] = 'true');
-        header('Location: ./index.php?', http_build_query($httpHeader));
-        print home();
-        print attributes();
+        $requestedPage->goMessage(false, "Login");
     }
+    header('Location: ./index.php?' . http_build_query($httpHeader));
+    $requestedPage->goHome();
+
 } elseif ($forwardControl === "signup") {
     if (isset($_POST["username"]) && isset($_POST["password"]) && isset($_POST["confirmpassword"]) && isset($_POST["email"])) {
-
-        if ($_POST["password"] === $_POST["confirmpassword"]) {
-            $user = new User();
-            $user->setUsername($_POST["username"]);
-            $user->setPassword($_POST["password"]);
-            $user->setEmail($_POST["email"]);
-            $verified = $user->createAccess();
-
-            if ($verified) {
-                array_push($httpHeader, $httpHeader['destination'] = 'home', $httpHeader['success'] = 'true');
-                header('Location: ./index.php?' . http_build_query($httpHeader));
-                print home();
-                print map(30.267151, -97.743057, 7);
-                print attributes();
-            } else {
-                array_push($httpHeader, $httpHeader['destination'] = 'home', $httpHeader['failedlogin'] = 'true');
-                header('Location: ./index.php?' . http_build_query($httpHeader));
-                print home();
-                print attributes();
-            }
-        }
+        $requestedPage->goMessage($requestedPage->goSignup($_POST["username"], $_POST["password"], $_POST["confirmpassword"], $_POST["email"]), "Sign-up");
     } else {
-        array_push($httpHeader, $httpHeader['destination'] = 'home', $httpHeader['failedlogin'] = 'true');
-        header('Location: ./index.php?' . http_build_query($httpHeader));
-        print home();
-        print attributes();
+        $requestedPage->goMessage(false, "Sign-up");
     }
+    header('Location: ./index.php?' . http_build_query($httpHeader));
+    $requestedPage->goHome();
+} else if ($forwardControl === 'changepassword') {
+    if (isset($_POST["currentpassword"]) && isset($_POST["newpassword"])) {
+        $requestedPage->goMessage($requestedPage->goNewPassword($_POST["currentpassword"], $_POST["newpassword"]), 'Updating password');
+    } else {
+        $requestedPage->goMessage(false, 'Changing password');
+    }
+    $requestedPage->goManage();
+} else if ($forwardControl === 'changeemail') {
+    if (isset($_POST["newemail"])) {
+        $requestedPage->goMessage($requestedPage->goNewEmail($_POST["newemail"]), 'Updated email');
+    } else {
+        $requestedPage->goMessage(false, 'Changing email');
+    }
+    $requestedPage->goManage();
+} else if ($forwardControl === 'deleteaccount') {
+    $requestedPage->goMessage($requestedPage->goDeleteAccount(), 'Account deletion');
+    session_destroy();
+    header('Location: ./index.php?' . http_build_query($httpHeader));
+    $requestedPage->goHome();
+} else if ($forwardControl === 'favorite') {
+
+} else if ($forwardControl === 'search') {
+
 } elseif ($forwardControl === "logout" && $active) {
     session_destroy();
-    array_push($httpHeader, $httpHeader['destination'] = 'home', $httpHeader['logout'] = 'true');
     header('Location: ./index.php?' . http_build_query($httpHeader));
-    $forwardControl = "home";
-    print home();
-    print map(30.267151, -97.743057, 7);
-    print attributes();
+    $requestedPage->goMessage(true, 'Logout');
+    $requestedPage->goHome();
 } else {
-    array_push($httpHeader, $httpHeader['destination'] = 'home', $httpHeader['failed'] = 'true');
     header('Location: ./index.php?' . http_build_query($httpHeader));
-    print home();
-    print map(30.267151, -97.743057, 7);
-    print attributes();
+    $requestedPage->goMessage(false, 'Request');
+    $requestedPage->goHome();
 }
 exit();
 ?>

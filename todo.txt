@@ -5,17 +5,38 @@ Features Needed:
             Remove
             Change Visual
             Show current favorites in explore
-        Error Handling:
-            Clean up DB Code
-    Profile
-        Change Password
-        Change Email
-        Delete Account
     WebAdmin
         Admin functions
     Search
         Live Search
         Create trimmed view
     Weather
-        Get Weather Information
-        Display Weather Information
+        tiny screen adjustments
+
+
+For today:
+    Finish User management
+        favorites (add and remove)
+    Finish WeatherManager
+        Add alerts?
+
+
+
+API Mapping:
+
+current.temp = temperature
+current.feels_like = human perception of temp
+current.pressure = pressure hPa
+current.humidity = humidity %
+current.clouds = cloudiness %;
+current.wind_speed = wind speed
+current.weather.id = current weather outside
+current.weather.description = current weather description
+
+hourly/daily = same as current but hourly.*
+
+
+alerts.start
+alerts.end
+alerts.description
+

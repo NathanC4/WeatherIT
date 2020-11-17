@@ -3,38 +3,38 @@ include_once 'QueryDB.php';
 
 class User
 {
-    private $username;
-    private $password;
-    private $email;
+    private string $username;
+    private string $password;
+    private string $email;
 
     function __construct()
     {
-        $this->db = new QueryDB();
+        $this->qdb = new QueryDB();
     }
 
     /**
      * @param $value
      * set the username value of the user object
      */
-    function setUsername($value)
+    function setUsername(string $value)
     {
         $this->username = $value;
     }
 
     /**
      * @param $value
-     * set the password value of the user object
+     * set the password value of the user object as a hash
      */
-    function setPassword($value)
+    function setPassword(string $value)
     {
-        $this->password = $value;
+        $this->password = (string)password_hash($value, PASSWORD_DEFAULT);
     }
 
     /**
      * @param string $email
      * set the email of the user object
      */
-    public function setEmail($email): void
+    public function setEmail(string $email): void
     {
         $this->email = $email;
     }
@@ -48,54 +48,65 @@ class User
     {
 
         $SQL = "INSERT INTO USERS (username, password, email, isAdmin) VALUES ('$this->username', '$this->password', '$this->email', default)";
-        $queryResults = $this->db->executeSQL($SQL);
+        $queryResults = $this->qdb->executeSQL($SQL);
         if ($queryResults) {
-            return $this->verifyAccess();
+            return true;
         } else {
             return false;
         }
     }
 
-    function verifyAccess(): bool
+    function verifyAccess($userEnteredPassword): bool
     {
         $SQL = "SELECT * FROM USERS WHERE username='{$this->username}'";
-        $queryResults = $this->db->fetchRow($SQL);
-        isset($queryResults["username"]) ? $_SESSION["username"] = $queryResults["username"] : null;
-        isset($queryResults["username"]) ? $_SESSION["logged"] = true : $_SESSION["logged"] = false;
-        isset($queryResults["username"]) && $queryResults["isAdmin"] === "1" ?
-            $_SESSION["admin"] = true : $_SESSION["admin"] = false;
-
-        $this->db->closeConnection();
-        return isset($queryResults["username"]);
+        $queryResults = $this->qdb->fetchRow($SQL);
+        $bool = false;
+        if (isset($queryResults["password"])) {
+            $bool = password_verify($userEnteredPassword, $queryResults["password"]);
+            isset($queryResults["username"]) ? $_SESSION["username"] = $queryResults["username"] : null;
+            isset($queryResults["username"]) ? $_SESSION["logged"] = true : $_SESSION["logged"] = false;
+            isset($queryResults["username"]) && $queryResults["isAdmin"] === "1" ?
+                $_SESSION["admin"] = true : $_SESSION["admin"] = false;
+        }
+        return $bool;
     }
 
-    function addFavorite($favorite)
+    function addFavorite($location_id): bool
     {
-
+        $query = "INSERT INTO USERS_FAVORITES (username, location_id) VALUES ('$this->username', $location_id)";
+        return $this->qdb->executeSQL($query);
     }
 
-    function removeFavorite($favorite)
+    function removeFavorite($location_id): bool
     {
-
+        $query = "DELETE FROM USERS_FAVORITES WHERE username='$this->username' AND location_id=$location_id";
+        return $this->qdb->executeSQL($query);
     }
 
-    function changePassword($oldPassword, $newPassword)
+    function changePassword($oldPassword, $newPassword): bool
     {
-
+        $this->password = $oldPassword;
+        if ($this->verifyAccess($oldPassword)) {
+            $newPasswordHash = password_hash($newPassword, PASSWORD_DEFAULT);
+            $query = "UPDATE USERS SET password='$newPasswordHash' WHERE username='$this->username'";
+            return $this->qdb->executeSQL($query);
+        } else {
+            return false;
+        }
     }
 
-    function changeEmail($newEmail)
+    function changeEmail($newEmail): bool
     {
-
+        $query = "UPDATE USERS SET email='$newEmail' WHERE username='$this->username'";
+        return $this->qdb->executeSQL($query);
     }
 
-    function deleteAccount()
+    function deleteAccount(): bool
     {
-
-    }
-
-    function resetPassword()
-    {
-
+        $queryA = "DELETE FROM USERS_FAVORITES WHERE username='$this->username'";
+        $queryB = "DELETE FROM USERS WHERE username='$this->username'";
+        $resultsA = $this->qdb->executeSQL($queryA);
+        $resultsB = $this->qdb->executeSQL($queryB);
+        return ($resultsA === true && $resultsB === true);
     }
 }

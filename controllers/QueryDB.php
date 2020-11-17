@@ -28,7 +28,12 @@ class QueryDB
      */
     function executeSQL($query)
     {
-        return $this->msqli->query($query);
+        try {
+            return $this->msqli->query($query);
+        } catch (Exception $e) {
+            print $e;
+            return false;
+        }
     }
 
     /**

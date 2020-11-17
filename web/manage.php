@@ -12,8 +12,8 @@ function manage()
             <form class="user-form" id="password" action="index.php?destination=changepassword" method="post">
                 <img class="user-icon" src="./content/user.svg" alt="user icon">
                 <div class="user-text">CHANGE PASSWORD</div>
-                <input class="text-input" type="password" name="current-password" placeholder="current password.." required>
-                <input class="text-input" type="password" name="new-password" placeholder="new password.." required>
+                <input class="text-input" type="password" name="currentpassword" placeholder="current password.." required>
+                <input class="text-input" type="password" name="newpassword" placeholder="new password.." required>
                 <div class="button-container">
                     <button class="generic-button" type="reset" onclick="hideForm()" title="cancel password change">
                         <img src="./content/error.svg" alt="cancel password change">
@@ -27,8 +27,7 @@ function manage()
             <form class="user-form" id="email" action="index.php?destination=changeemail" method="post">
                 <img class="user-icon" src="./content/user.svg" alt="user icon">
                 <div class="user-text">CHANGE EMAIL</div>
-                <input class="text-input" type="email" name="current-email" placeholder="current email.." required>
-                <input class="text-input" type="email" name="new-email" placeholder="new email.." required>
+                <input class="text-input" type="email" name="newemail" placeholder="new email.." required>
                 <div class="button-container">
                     <button class="generic-button" type="reset" onclick="hideForm()" title="cancel email change">
                         <img src="./content/error.svg" alt="cancel email">

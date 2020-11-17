@@ -1,9 +1,5 @@
 <?php
-
-use JetBrains\PhpStorm\Pure;
-
 include_once 'QueryDB.php';
-include_once 'Weather.php';
 
 class Location
 {
@@ -16,69 +12,35 @@ class Location
     private float $uid;
     private float $favoriteUID;
 
-    private Weather $weatherHTML;
     private QueryDB $db;
 
     function __construct()
     {
         $this->db = new QueryDB();
-        $this->weatherHTML = new Weather();
     }
 
     /**
-     * @param $content
-     * @return string
+     * @param $activeUser
+     * @return array
      */
-    public function locationText($content): string
+    function userFavorites($activeUser): array
     {
-        $htmlStart = '<section class="content-a">';
-
-        if ($content === null) {
-            $innerHTML = '<div class="location" id="' . $this->getUid() . '">';
-            $innerHTML .= '<input class="favorite" type="checkbox" name="favorite" id="favorite">';
-            $innerHTML .= '<label class="favorite-label" for="favorite"><img src="./content/like.png" /></label>';
-            $innerHTML .= '<p class="location-details">Region: ' . $this->getCityName() .
-                ($this->getStateName() === null || $this->getStateName() === "" ? null : ', ' . $this->getStateName()) . '</p>';
-            $innerHTML .= '<p class="location-details">Country: ' . $this->getCountryName() . '</p>';
-            $innerHTML .= '</div>';
-        } else {
-            $innerHTML = 'in progress';
-        }
-        $weather = '<div class="weather">';
-        $weather .= '<div class="location-weather"><h3>Today</h3>';
-        $weather .= $this->weatherHTML->cloudy() . '<p class="location-temp">60°F</p></div>';
-        $weather .= '<div class="location-weather"><h3>Tonight</h3>';
-        $weather .= $this->weatherHTML->sunnyWithWind() . '<p class="location-temp">45°F</p></div>';
-        $weather .= '<div class="location-weather"><h3>Tomorrow</h3>';
-        $weather .= $this->weatherHTML->snow() . '<p class="location-temp">34°F</p></div>';
-        $weather .= '</div>';
-
-        $htmlEnd = '</section>';
-
-        return $htmlStart . $innerHTML . $weather . $htmlEnd;
+        return $this->db->fetchRows("SELECT location_id FROM USERS_FAVORITES WHERE username='$activeUser'");
     }
 
-    function getLocationDetails($activeUser): bool
+    function getLocationDetails(): bool
     {
         try {
-            $SQLa = "SELECT * FROM USERS_FAVORITES WHERE username='$activeUser'";
-            $query = $this->db->fetchRow($SQLa);
-            if (count($query) > 0) {
-                $locationID = $query["location_id"];
-                $SQLb = "SELECT * FROM LOCATIONS_DATA WHERE location_id='$locationID'";
-                $queryResults = $this->db->fetchRow($SQLb);
-
-                if (count($queryResults) > 0) {
-
-                    $this->setLatitude($queryResults["coord_lat"]);
-                    $this->setLongitude($queryResults["coord_lon"]);
-                    $this->setZoom(6);
-                    $this->setCityName($queryResults["city"]);
-                    $this->setStateName($queryResults["state"]);
-                    $this->setCountryName($queryResults["country"]);
-                    $this->setUid($queryResults["location_id"]);
-                    return true;
-                }
+            $SQLb = "SELECT * FROM LOCATIONS_DATA WHERE location_id='$this->uid'";
+            $queryResults = $this->db->fetchRow($SQLb);
+            if (count($queryResults) > 0) {
+                $this->setLatitude($queryResults["coord_lat"]);
+                $this->setLongitude($queryResults["coord_lon"]);
+                $this->setZoom(6);
+                $this->setCityName($queryResults["city"]);
+                $this->setStateName($queryResults["state"]);
+                $this->setCountryName($queryResults["country"]);
+                return true;
             }
         } catch (Exception $exception) {
             return false;
@@ -99,10 +61,8 @@ class Location
             $this->setStateName($random["state"]);
             $this->setCountryName($random["country"]);
             $this->setUid($random["location_id"]);
-
             return true;
         }
-        $this->db->closeConnection();
         return false;
     }
 

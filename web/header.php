@@ -21,7 +21,7 @@ function topControls($loggedIn, $isAdmin)
     }
 
     $header .= '
-                <form class="search-form" action="" method="post">
+                <form class="search-form" action="index.php?destination=search" method="post">
                 <input class="search-bar" type="search" name="search" placeholder="search locations..">
                 <button type="submit"><img src="./content/search.svg" alt="spotlight tool for search"></button>
             </form>
