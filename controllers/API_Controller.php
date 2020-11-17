@@ -4,7 +4,7 @@ include_once 'QueryDB.php';
 class API_Controller
 {
     private $time;
-    private QueryDB $key;
+    private $key;
 
     function __construct($time)
     {

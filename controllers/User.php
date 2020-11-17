@@ -3,9 +3,9 @@ include_once 'QueryDB.php';
 
 class User
 {
-    private string $username;
-    private string $password;
-    private string $email;
+    private $username;
+    private $password;
+    private $email;
 
     function __construct()
     {
@@ -34,7 +34,7 @@ class User
      * @param string $email
      * set the email of the user object
      */
-    public function setEmail(string $email): void
+    public function setEmail(string $email)
     {
         $this->email = $email;
     }
@@ -44,7 +44,7 @@ class User
      * upon successful insert the user is then logged in and a value of true is returned based on login success
      * otherwise the value is false for any failures and returned back
      */
-    function createAccess(): bool
+    function createAccess()
     {
 
         $SQL = "INSERT INTO USERS (username, password, email, isAdmin) VALUES ('$this->username', '$this->password', '$this->email', default)";
@@ -56,7 +56,7 @@ class User
         }
     }
 
-    function verifyAccess($userEnteredPassword): bool
+    function verifyAccess($userEnteredPassword)
     {
         $SQL = "SELECT * FROM USERS WHERE username='{$this->username}'";
         $queryResults = $this->qdb->fetchRow($SQL);
@@ -71,19 +71,19 @@ class User
         return $bool;
     }
 
-    function addFavorite($location_id): bool
+    function addFavorite($location_id)
     {
         $query = "INSERT INTO USERS_FAVORITES (username, location_id) VALUES ('$this->username', $location_id)";
         return $this->qdb->executeSQL($query);
     }
 
-    function removeFavorite($location_id): bool
+    function removeFavorite($location_id)
     {
         $query = "DELETE FROM USERS_FAVORITES WHERE username='$this->username' AND location_id=$location_id";
         return $this->qdb->executeSQL($query);
     }
 
-    function changePassword($oldPassword, $newPassword): bool
+    function changePassword($oldPassword, $newPassword)
     {
         $this->password = $oldPassword;
         if ($this->verifyAccess($oldPassword)) {
@@ -95,13 +95,13 @@ class User
         }
     }
 
-    function changeEmail($newEmail): bool
+    function changeEmail($newEmail)
     {
         $query = "UPDATE USERS SET email='$newEmail' WHERE username='$this->username'";
         return $this->qdb->executeSQL($query);
     }
 
-    function deleteAccount(): bool
+    function deleteAccount()
     {
         $queryA = "DELETE FROM USERS_FAVORITES WHERE username='$this->username'";
         $queryB = "DELETE FROM USERS WHERE username='$this->username'";

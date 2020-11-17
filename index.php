@@ -21,15 +21,15 @@ $requestedPage = new PageController($active, $isAdmin);
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="ISO-8859-1">
+    <meta charset="ISO-8859-1" content="width=device-width,height=device-height,initial-scale=1.0" name="viewport">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;400;500;600&display=swap"
           rel="stylesheet">
-    <link href="styles/outline.css" rel="stylesheet" type="text/css">
-    <link href="styles/index.css" rel="stylesheet" type="text/css">
-    <link href="styles/manage.css" rel="stylesheet" type="text/css">
-    <link href="styles/weather.css" rel="stylesheet" type="text/css">
+    <link href="./styles/outline.css" rel="stylesheet" type="text/css">
+    <link href="./styles/index.css" rel="stylesheet" type="text/css">
+    <link href="./styles/manage.css" rel="stylesheet" type="text/css">
+    <link href="./styles/weather.css" rel="stylesheet" type="text/css">
     <link rel="icon" href="./content/icon.png"/>
-    <script src="js/controls.js" type="text/javascript"></script>
+    <script src="./js/controls.js" type="text/javascript"></script>
     <title>WeatherIT: simple and easy-to-use weather information</title>
 </head>
 <body>
@@ -85,9 +85,9 @@ if ($forwardControl === null || $forwardControl === "home") {
     header('Location: ./index.php?' . http_build_query($httpHeader));
     $requestedPage->goHome();
 } else if ($forwardControl === 'favorite') {
-
+    $requestedPage->goHome();
 } else if ($forwardControl === 'search') {
-
+    $requestedPage->goHome();
 } elseif ($forwardControl === "logout" && $active) {
     session_destroy();
     header('Location: ./index.php?' . http_build_query($httpHeader));

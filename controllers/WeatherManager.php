@@ -5,9 +5,9 @@ include_once 'WeatherIcons.php';
 
 class WeatherManager
 {
-    private Weather $weatherHTML;
-    private Location $locationDetails;
-    private string $user;
+    private $weatherHTML;
+    private $locationDetails;
+    private $user;
 
     public function __construct()
     {
@@ -21,7 +21,7 @@ class WeatherManager
      * @return string
      * returns the complete weather banner along with the temp based on the API data
      */
-    private function weatherDetails($data): string
+    private function weatherDetails($data)
     {
         $timezone = $data["timezone_offset"];
         $currentTemp = (int)floor($data["current"]["temp"]);
@@ -66,7 +66,7 @@ class WeatherManager
      * returns the correct weather icon based on a set of codes from the API
      *
      */
-    private function weatherDetailsIcon($weatherID, $timezone): string
+    private function weatherDetailsIcon($weatherID, $timezone)
     {
         $utcTime = date("H", strtotime((time() - (float)$timezone) . ' UTC'));
         $storm = array(200, 201, 202, 210, 211, 212, 221, 230, 231, 232);
@@ -112,7 +112,7 @@ class WeatherManager
      * Returns the location banner in its complete form
      * Shows location information along with the weather details
      */
-    private function locationBanner($isFavorite, $data): string
+    private function locationBanner($isFavorite, $data)
     {
         $htmlStart = '<section class="content-a">';
 
@@ -148,7 +148,7 @@ class WeatherManager
      * returns the map based on the inputted location details
      *
      */
-    public function map($lat, $lon, $zoom, $uid): string
+    public function map($lat, $lon, $zoom, $uid)
     {
         $embed = "https://embed.windy.com/embed2.html?lat={$lat}&lon={$lon}&detailLat={$lat}&detailLon={$lon}&width=650&height=450&zoom={$zoom}&level=surface&overlay=wind&product=ecmwf&menu=&message=&marker=&calendar=now&pressure=&type=map&location=coordinates&detail=&metricWind=default&metricTemp=default&radarRange=-1";
         $sectionStart = '<section class="content-b" id="map-' . $uid . '" style="display:none">';
@@ -163,7 +163,7 @@ class WeatherManager
      * @return array
      * Returns the weather API data in JSON form
      */
-    private function showWeather($lat, $lon): array
+    private function showWeather($lat, $lon)
     {
         $weatherData = new WeatherAPI($lat, $lon);
         return $weatherData->processRequest();
@@ -174,7 +174,7 @@ class WeatherManager
      * @return string
      * Displays the user's personal favorites based on the active user
      */
-    public function showFavorites(): string
+    public function showFavorites()
     {
         $html = "";
         $favorites = $this->locationDetails->userFavorites($this->user);
@@ -208,7 +208,7 @@ class WeatherManager
      * @return string
      * shows a random location repeat based on the number of times set
      */
-    function showRandom($cnt): string
+    function showRandom($cnt)
     {
         $html = "";
         for ($i = 0; $i < $cnt; $i++) {

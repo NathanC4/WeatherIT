@@ -1,5 +1,5 @@
 <?php
-function attributes(): string
+function attributes()
 {
     return '
         <section class="attributes">

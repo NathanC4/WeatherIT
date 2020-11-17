@@ -19,6 +19,42 @@
     border-bottom: 1px solid rgb(203, 203, 203);
 }
 
+.banner {
+    display: flex;
+    flex-flow: row;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.banner-icons {
+    display: flex;
+    flex-flow: column;
+    justify-content: left;
+    align-items: left;
+    background: linear-gradient(to left, #57c1eb 0%, #57c1eb 100%);
+    color: white;
+    font-size: 24px;
+    padding: 10px 10px 0 25px;
+    border: 1px solid rgba(255, 255, 255, 1);
+    border-right: none;
+    border-radius: 20px 0 0 20px;
+}
+
+.banner-header {
+    display: flex;
+    flex-flow: column;
+    width: 100%;
+    justify-content: flex-end;
+    align-items: bottom;
+    color: white;
+    background: linear-gradient(to left, #246fa8 0%, #57c1eb 100%);
+    font-size: 34px;
+    font-weight: 100;
+    padding: 0 0 25px 25px;
+    border: 1px solid rgba(255, 255, 255, 1);
+    border-left: 2px solid white;
+}
+
 .information {
     display: flex;
     flex-flow: column;
@@ -106,7 +142,7 @@ _::-webkit-full-page-media, _:future, :root .text-input {
 }
 
 .location-details {
-    font-size: 15px;
+    font-size: 17px;
     font-weight: 400;
     color: #FFFFFF;
 }
@@ -197,7 +233,7 @@ _::-webkit-full-page-media, _:future, :root .text-input {
     border-radius: 50%;
 }
 
-@media screen and (max-width: 1045px) {
+@media screen and (max-width: 1090px) {
     .weather {
         flex-flow: column;
     }
@@ -222,7 +258,7 @@ _::-webkit-full-page-media, _:future, :root .text-input {
         display: flex;
         flex-flow: column-reverse;
         padding: 0;
-        word-break: break-all;
+        word-break: break-word;
     }
 
     .location-tools {
@@ -233,7 +269,7 @@ _::-webkit-full-page-media, _:future, :root .text-input {
     }
 
     .location-details {
-        font-size: 13px;
+        font-size: 15px;
         font-weight: 400;
         color: #FFFFFF;
     }
@@ -270,7 +306,7 @@ _::-webkit-full-page-media, _:future, :root .text-input {
         display: flex;
         flex-flow: column-reverse;
         padding: 0;
-        word-break: break-all;
+        word-break: break-word;
     }
 
     .location-tools {
@@ -281,7 +317,7 @@ _::-webkit-full-page-media, _:future, :root .text-input {
     }
 
     .location-details {
-        font-size: 13px;
+        font-size: 15px;
         font-weight: 400;
         color: #FFFFFF;
     }

@@ -3,16 +3,16 @@ include_once 'QueryDB.php';
 
 class Location
 {
-    private float $latitude;
-    private float $longitude;
-    private int $zoom;
-    private string $cityName;
-    private string $countryName;
-    private string $stateName;
-    private float $uid;
-    private float $favoriteUID;
+    private $latitude;
+    private $longitude;
+    private $zoom;
+    private $cityName;
+    private $countryName;
+    private $stateName;
+    private $uid;
+    private $favoriteUID;
 
-    private QueryDB $db;
+    private $db;
 
     function __construct()
     {
@@ -23,12 +23,12 @@ class Location
      * @param $activeUser
      * @return array
      */
-    function userFavorites($activeUser): array
+    function userFavorites($activeUser)
     {
         return $this->db->fetchRows("SELECT location_id FROM USERS_FAVORITES WHERE username='$activeUser'");
     }
 
-    function getLocationDetails(): bool
+    function getLocationDetails()
     {
         try {
             $SQLb = "SELECT * FROM LOCATIONS_DATA WHERE location_id='$this->uid'";
@@ -48,7 +48,7 @@ class Location
         return false;
     }
 
-    function explore(): bool
+    function explore()
     {
         $SQL = "SELECT * FROM LOCATIONS_DATA ORDER BY RAND() LIMIT 1";
         $random = $this->db->fetchRow($SQL);
@@ -69,7 +69,7 @@ class Location
     /**
      * @param float $latitude
      */
-    public function setLatitude(float $latitude): void
+    public function setLatitude(float $latitude)
     {
         $this->latitude = $latitude;
     }
@@ -77,7 +77,7 @@ class Location
     /**
      * @param float $longitude
      */
-    public function setLongitude(float $longitude): void
+    public function setLongitude(float $longitude)
     {
         $this->longitude = $longitude;
     }
@@ -85,7 +85,7 @@ class Location
     /**
      * @param int $zoom
      */
-    public function setZoom(int $zoom): void
+    public function setZoom(int $zoom)
     {
         $this->zoom = $zoom;
     }
@@ -93,7 +93,7 @@ class Location
     /**
      * @param string $cityName
      */
-    public function setCityName(string $cityName): void
+    public function setCityName(string $cityName)
     {
         $this->cityName = $cityName;
     }
@@ -101,7 +101,7 @@ class Location
     /**
      * @param string $stateName
      */
-    public function setStateName(string $stateName): void
+    public function setStateName(string $stateName)
     {
         $this->stateName = $stateName;
     }
@@ -109,7 +109,7 @@ class Location
     /**
      * @param string $countryName
      */
-    public function setCountryName(string $countryName): void
+    public function setCountryName(string $countryName)
     {
         $this->countryName = $countryName;
     }
@@ -117,7 +117,7 @@ class Location
     /**
      * @param float $uid
      */
-    public function setUid(float $uid): void
+    public function setUid(float $uid)
     {
         $this->uid = $uid;
     }
@@ -125,7 +125,7 @@ class Location
     /**
      * @return string
      */
-    public function getCityName(): string
+    public function getCityName()
     {
         return $this->cityName;
     }
@@ -133,7 +133,7 @@ class Location
     /**
      * @return string
      */
-    public function getStateName(): string
+    public function getStateName()
     {
         return $this->stateName;
     }
@@ -141,7 +141,7 @@ class Location
     /**
      * @return string
      */
-    public function getCountryName(): string
+    public function getCountryName()
     {
         return $this->countryName;
     }
@@ -149,7 +149,7 @@ class Location
     /**
      * @return double
      */
-    public function getLatitude(): float
+    public function getLatitude()
     {
         return $this->latitude;
     }

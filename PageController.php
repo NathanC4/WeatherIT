@@ -1,20 +1,20 @@
 <?php
-include 'controllers/WeatherManager.php';
-include 'controllers/User.php';
-include 'web/header.php';
-include 'web/home.php';
-include 'web/explore.php';
-include 'web/manage.php';
-include 'web/webadmin.php';
-include 'web/attributes.php';
-include 'web/message.php';
-include 'web/search.php';
+include_once './controllers/WeatherManager.php';
+include_once './controllers/User.php';
+include_once './web/header.php';
+include_once './web/home.php';
+include_once './web/explore.php';
+include_once './web/manage.php';
+include_once './web/webadmin.php';
+include_once './web/attributes.php';
+include_once './web/message.php';
+include_once './web/search.php';
 
 class PageController
 {
-    private WeatherManager $weather;
-    private string $active;
-    private string $admin;
+    private $active;
+    private $admin;
+    private $weather;
 
     public function __construct($activeUser, $activeAdmin)
     {
@@ -23,10 +23,21 @@ class PageController
         $this->admin = $activeAdmin;
     }
 
+    function goBanner()
+    {
+        $icons = new Weather();
+        $html = '<div class="banner">';
+        $html .= '<div class="banner-icons"><p class="banner-text">12:00 </p>' . $icons->sunny() . '<p class="banner-text">12:01 </p>' . $icons->snow() . '</div>';
+        $html .= '<h3 class="banner-header">Weather is unpredictable;<br>WeatherIT makes it predictable;</h3>';
+        $html .= '</div>';
+        print $html;
+    }
+
     function goHome()
     {
         print home();
         if (!$this->active) {
+            $this->goBanner();
             print $this->weather->showRandom(1);
         } else {
             print $this->weather->showFavorites();
@@ -61,7 +72,7 @@ class PageController
         }
     }
 
-    function goLogin($username, $password): bool
+    function goLogin($username, $password)
     {
         $user = new User();
         $user->setUsername($username);
@@ -69,7 +80,7 @@ class PageController
         return $user->verifyAccess($password);
     }
 
-    function goSignup($username, $password, $confirmPassword, $email): bool
+    function goSignup($username, $password, $confirmPassword, $email)
     {
         if ($password === $confirmPassword) {
             $user = new User();
@@ -83,7 +94,7 @@ class PageController
         return false;
     }
 
-    function goNewPassword($oldPassword, $newPassword): bool
+    function goNewPassword($oldPassword, $newPassword)
     {
         if (isset($_SESSION["username"])) {
             $user = new User();
@@ -93,7 +104,7 @@ class PageController
         return false;
     }
 
-    function goNewEmail($newEmail): bool
+    function goNewEmail($newEmail)
     {
         if (isset($_SESSION["username"])) {
             $user = new User();
@@ -103,7 +114,7 @@ class PageController
         return false;
     }
 
-    function goDeleteAccount(): bool
+    function goDeleteAccount()
     {
         if (isset($_SESSION["username"])) {
             $user = new User();
@@ -113,7 +124,7 @@ class PageController
         return false;
     }
 
-    function goFavorite($action): bool
+    function goFavorite($action)
     {
         return false;
     }

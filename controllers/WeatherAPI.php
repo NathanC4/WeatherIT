@@ -3,12 +3,12 @@ include_once 'QueryDB.php';
 
 class WeatherAPI
 {
-    private QueryDB $apiKey;
+    private $apiKey;
     //private string $currentURL = "api.openweathermap.org/data/2.5/group?id={id}&units=imperial&appid={key}";
-    private string $currentURL = "api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude=minutely&units=imperial&appid={key}";
-    private string $key;
-    private float $lat;
-    private float $lon;
+    private $currentURL = "api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude=minutely&units=imperial&appid={key}";
+    private $key;
+    private $lat;
+    private $lon;
 
     public function __construct($lat, $lon)
     {
@@ -18,7 +18,7 @@ class WeatherAPI
         $this->lon = (float)$lon;
     }
 
-    private function prepareBasicURL(): bool
+    private function prepareBasicURL()
     {
         if ($this->lat === null || $this->lon === null || $this->key === null) {
             return false;
@@ -29,7 +29,7 @@ class WeatherAPI
         return true;
     }
 
-    private function getWeatherData(): string
+    private function getWeatherData()
     {
         if ($this->prepareBasicURL()) {
             $curl = curl_init();
@@ -50,7 +50,7 @@ class WeatherAPI
         }
     }
 
-    public function processRequest(): array
+    public function processRequest()
     {
         $rawData = $this->getWeatherData();
         if ($rawData === "") {
