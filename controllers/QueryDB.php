@@ -15,7 +15,7 @@ class QueryDB
         $this->apiKey;
     }
 
-    public function getApiKey()
+    public function getApiKey(): string
     {
         return $this->apiKey;
     }

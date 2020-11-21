@@ -47,7 +47,7 @@
     justify-content: flex-end;
     align-items: bottom;
     color: white;
-    background: linear-gradient(to left, #246fa8 0%, #57c1eb 100%);
+    background: linear-gradient(to left, #57c1eb 0%, #57c1eb 100%);
     font-size: 34px;
     font-weight: 100;
     padding: 0 0 25px 25px;
@@ -124,15 +124,13 @@ _::-webkit-full-page-media, _:future, :root .text-input {
 .content-a {
     display: flex;
     flex-flow: row;
-    background: rgb(203, 203, 203);
+    margin-bottom: 3px;
 }
 
 .location {
     width: 275px;
     min-height: 50px;
     padding: 10px;
-    margin: 2px;
-    margin-left: 3px;
     margin-right: 0;
     background: linear-gradient(to right, #246fa8 0%, #246fa8 100%);
     display: flex;
@@ -151,7 +149,6 @@ _::-webkit-full-page-media, _:future, :root .text-input {
     width: 100%;
     min-height: 50px;
     padding: 10px;
-    margin: 2px;
     margin-left: 0;
     display: flex;
     flex-flow: row;
@@ -176,17 +173,16 @@ _::-webkit-full-page-media, _:future, :root .text-input {
     flex-flow: column;
     justify-content: center;
     align-items: center;
+    text-align: center;
 }
 
-.content-b {
+.content-b, iframe {
     background: rgb(203, 203, 203);
     display: flex;
     flex-flow: row;
     justify-content: center;
-}
-
-.content-b {
     height: 500px;
+    border-radius: 20px 0 0 20px;
 }
 
 .location-tools {
@@ -295,9 +291,12 @@ _::-webkit-full-page-media, _:future, :root .text-input {
     }
 
     .location-weather {
+        display: flex;
+        flex-flow: column;
         font-size: 13px;
         justify-content: center;
         align-items: center;
+        text-align: center;
     }
 }
 
@@ -343,8 +342,11 @@ _::-webkit-full-page-media, _:future, :root .text-input {
     }
 
     .location-weather {
-        font-size: 11px;
+        display: flex;
+        flex-flow: column;
+        font-size: 13px;
         justify-content: center;
         align-items: center;
+        text-align: center;
     }
 }

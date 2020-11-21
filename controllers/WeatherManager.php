@@ -101,6 +101,8 @@ class WeatherManager
             } else {
                 $weather = $this->weatherHTML->cloudWithMoon();
             }
+        } else {
+            $weather = $this->weatherHTML->sunny();
         }
         return $weather;
     }
@@ -117,13 +119,13 @@ class WeatherManager
         $htmlStart = '<section class="content-a">';
 
         $innerHTML = '<div class="location" id="' . $this->locationDetails->getUid() . '">';
-        $innerHTML .= '<div class="location-tools">';
+        $innerHTML .= '<div class="location-tools" id="loc-' . $this->locationDetails->getUid() . '">';
         if ($_SESSION["logged"]) {
-            $innerHTML .= '<input class="favorite" type="checkbox" name="favorite" id="favorite">';
+            $innerHTML .= '<input class="favorite" type="checkbox" name="chk' . $this->locationDetails->getUid() . '" id="chk' . $this->locationDetails->getUid() . '" onchange="favorites(this)">';
             if ($isFavorite) {
-                $innerHTML .= '<label class="favorite-label" for="favorite" title="unfavorite location"><img src="./content/like.svg"  alt="is favorite"/></label>';
+                $innerHTML .= '<label class="favorite-label" for="chk' . $this->locationDetails->getUid() . '" title="unfavorite"><img src="./content/like.svg"  alt="is favorite"/></label>';
             } else {
-                $innerHTML .= '<label class="favorite-label" for="favorite" title="favorite location"><img src="./content/like.png"  alt="not favorite"/></label>';
+                $innerHTML .= '<label class="favorite-label" for="chk' . $this->locationDetails->getUid() . '" title="favorite"><img src="./content/notlike.png"  alt="not favorite"/></label>';
             }
         }
         $innerHTML .= "<button type='button' class='map' onclick='displayMap(this.name);return false;' name='" . $this->locationDetails->getUid() . "' title='Show/Hide Map'><img src='./content/map.svg' alt='show/hide map'></button>";
@@ -185,7 +187,6 @@ class WeatherManager
                     $jsonData = $this->showWeather(
                         $this->locationDetails->getLatitude(),
                         $this->locationDetails->getLongitude());
-                    //$i === 0 ? var_dump($jsonData["current"]) : null;
 
                     $html .= "<div class='t'>";
                     $html .= $this->locationBanner(true, $jsonData);
@@ -201,6 +202,36 @@ class WeatherManager
             $html = $this->showRandom(1);
         }
         return $html;
+    }
+
+    public function showResults($string)
+    {
+        $html = "";
+        $searchResults = $this->locationDetails->search($string);
+
+        if (count($searchResults) > 0) {
+            for ($i = 0; $i < count($searchResults); $i++) {
+                $this->locationDetails->setUid((float)$searchResults[$i][0]);
+                if ($this->locationDetails->getLocationDetails()) {
+                    $jsonData = $this->showWeather(
+                        $this->locationDetails->getLatitude(),
+                        $this->locationDetails->getLongitude());
+
+                    $html .= "<div class='t'>";
+                    $html .= $this->locationBanner(false, $jsonData);
+
+                    $html .= $this->map($this->locationDetails->getLatitude(), $this->locationDetails->getLongitude(), 8, $this->locationDetails->getUid());
+                    $html .= "</div>";
+                } else {
+                    $html .= "<div class='t'>";
+                    $html .= "</div>";
+                }
+            }
+        } else {
+            $html = "No Results Found";
+        }
+        return $html;
+
     }
 
     /**

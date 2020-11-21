@@ -1,26 +1,9 @@
 Features Needed:
     Locations:
         Favorite:
-            Add
-            Remove
-            Change Visual
             Show current favorites in explore
     WebAdmin
         Admin functions
-    Search
-        Live Search
-        Create trimmed view
-    Weather
-        tiny screen adjustments
-
-
-For today:
-    Finish User management
-        favorites (add and remove)
-    Finish WeatherManager
-        Add alerts?
-
-
 
 API Mapping:
 

@@ -4,7 +4,6 @@ include_once 'QueryDB.php';
 class WeatherAPI
 {
     private $apiKey;
-    //private string $currentURL = "api.openweathermap.org/data/2.5/group?id={id}&units=imperial&appid={key}";
     private $currentURL = "api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude=minutely&units=imperial&appid={key}";
     private $key;
     private $lat;

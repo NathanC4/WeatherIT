@@ -73,13 +73,13 @@ class User
 
     function addFavorite($location_id)
     {
-        $query = "INSERT INTO USERS_FAVORITES (username, location_id) VALUES ('$this->username', $location_id)";
+        $query = "INSERT INTO USERS_FAVORITES (username, location_id) VALUES ('$this->username', {$location_id})";
         return $this->qdb->executeSQL($query);
     }
 
     function removeFavorite($location_id)
     {
-        $query = "DELETE FROM USERS_FAVORITES WHERE username='$this->username' AND location_id=$location_id";
+        $query = "DELETE FROM USERS_FAVORITES WHERE username='$this->username' AND location_id={$location_id}";
         return $this->qdb->executeSQL($query);
     }
 

@@ -8,7 +8,6 @@ include_once './web/manage.php';
 include_once './web/webadmin.php';
 include_once './web/attributes.php';
 include_once './web/message.php';
-include_once './web/search.php';
 
 class PageController
 {
@@ -21,6 +20,11 @@ class PageController
         $this->weather = new WeatherManager();
         $this->active = $activeUser;
         $this->admin = $activeAdmin;
+    }
+
+    function goHeader($isActive, $isAdmin)
+    {
+        print topControls($isActive, $isAdmin);
     }
 
     function goBanner()
@@ -124,14 +128,21 @@ class PageController
         return false;
     }
 
-    function goFavorite($action)
+    function goFavorite($type, $id)
     {
-        return false;
+        $user = new User();
+        $user->setUsername($_SESSION["username"]);
+        if ($type === "unfavorite") {
+            return $user->removeFavorite((float)$id);
+        } else {
+            return $user->addFavorite((float)$id);
+        }
     }
 
-    function goSearch()
+    function goSearch($search)
     {
-
+        $results = $this->weather->showResults($search);
+        print $results;
     }
 
     function goMessage($result, $word)

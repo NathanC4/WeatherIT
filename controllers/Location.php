@@ -10,7 +10,6 @@ class Location
     private $countryName;
     private $stateName;
     private $uid;
-    private $favoriteUID;
 
     private $db;
 
@@ -26,6 +25,16 @@ class Location
     function userFavorites($activeUser)
     {
         return $this->db->fetchRows("SELECT location_id FROM USERS_FAVORITES WHERE username='$activeUser'");
+    }
+
+
+    /**
+     * @param $searchText
+     * @return array
+     */
+    function search($searchText)
+    {
+        return $this->db->fetchRows("SELECT * FROM LOCATIONS_DATA WHERE city LIKE '%" . $searchText . "%' OR state LIKE '%" . $searchText . "%' OR country LIKE '%" . $searchText . "%' LIMIT 10");
     }
 
     function getLocationDetails()
@@ -157,7 +166,7 @@ class Location
     /**
      * @return double
      */
-    public function getLongitude(): float
+    public function getLongitude()
     {
         return $this->longitude;
     }
@@ -165,7 +174,7 @@ class Location
     /**
      * @return int
      */
-    public function getZoom(): int
+    public function getZoom()
     {
         return $this->zoom;
     }
@@ -173,7 +182,7 @@ class Location
     /**
      * @return float
      */
-    public function getUid(): float
+    public function getUid()
     {
         return $this->uid;
     }
