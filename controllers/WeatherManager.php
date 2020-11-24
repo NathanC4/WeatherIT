@@ -87,22 +87,18 @@ class WeatherManager
             } else {
                 $weather = $this->weatherHTML->clearNight();
             }
-        }
-        if (in_array($weatherID, $partialClouds)) {
+        } else if (in_array($weatherID, $partialClouds)) {
             if ($utcTime < "19") {
                 $weather = $this->weatherHTML->cloudyWithSun();
             } else {
                 $weather = $this->weatherHTML->clearNight();
             }
-        }
-        if (in_array($weatherID, $clouds)) {
+        } else if (in_array($weatherID, $clouds)) {
             if ($utcTime < "19") {
                 $weather = $this->weatherHTML->cloudy();
             } else {
                 $weather = $this->weatherHTML->cloudWithMoon();
             }
-        } else {
-            $weather = $this->weatherHTML->sunny();
         }
         return $weather;
     }
