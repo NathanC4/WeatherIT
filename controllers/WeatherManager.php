@@ -70,8 +70,9 @@ class WeatherManager
     {
         $utcTime = date("H", strtotime((time() - (float)$timezone) . ' UTC'));
         $storm = array(200, 201, 202, 210, 211, 212, 221, 230, 231, 232);
-        $rain = array(300, 301, 302, 310, 311, 312, 313, 314, 321, 500, 501, 502, 503, 504, 511, 520, 521, 522, 531);
+        $rain = array(300, 301, 302, 310, 311, 312, 313, 314, 321, 500, 501, 502, 503, 504, 511, 520, 521, 522, 531, 701);
         $snow = array(600, 601, 602, 611, 612, 613, 615, 616, 620, 621, 622);
+        $wind = array(731);
         $clear = array(800);
         $partialClouds = array(801, 802);
         $clouds = array(803, 804);
@@ -99,6 +100,8 @@ class WeatherManager
             } else {
                 $weather = $this->weatherHTML->cloudWithMoon();
             }
+        } else if (in_array($weatherID, $wind)) {
+            $weather = $this->weatherHTML->sunnyWithWind();
         }
         return $weather;
     }
